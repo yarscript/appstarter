@@ -21,7 +21,7 @@
 			<h4>Menu</h4>
 			<p>Hello, <?php echo $username; ?>!</p>
 			<?php if ($logged) { ?>
-			<form action="/logout" method="post">
+			<form action="account/logout" method="post">
 			<div><input type="submit" value="Logout" class="submit" name="logout"></div>
 			</form>
 			<?php } else { ?>
