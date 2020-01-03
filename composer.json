@@ -1,0 +1,19 @@
+{
+  "name": "i2ua/appstarter-codeigniter3",
+  "description": "CodeIgniter 3 Starter Application",
+  "type": "project",
+  "homepage": "https://github.com/i2ua/appstarter-codeigniter3",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mr. Green",
+      "email": "mr.green@mrgreen.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.7",
+    "codeigniter/framework": "~3.1"
+  },
+  "require-dev": {
+  }
+}
