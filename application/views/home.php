@@ -21,15 +21,15 @@
 			<h4>Menu</h4>
 			<p>Hello, <?php echo $username; ?>!</p>
 			<?php if ($logged) { ?>
-			<form action="account/logout" method="post">
+			<form action="account/logout">
 			<div><input type="submit" value="Logout" class="submit" name="logout"></div>
 			</form>
 			<?php } else { ?>
-			<form action="/login" method="post">
+			<form action="account/login">
 			<div><input type="submit" value="Login" class="submit"></div>
 			</form>
 			<br>
-			<form action="/register" method="post">
+			<form action="account/register">
 			<div><input type="submit" value="Register" class="submit"></div>
 			</form>
 			<?php  } ?>
