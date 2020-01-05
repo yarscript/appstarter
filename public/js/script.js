@@ -9,7 +9,7 @@ $(function () {
 
     forms.each(function () {
         $(this).children('[type = button]').on('click', function () {
-            // console.log($(this).siblings().val());
+
             $.post(
                 $(this).parent().attr("action"),
                 {
@@ -26,8 +26,6 @@ $(function () {
                 let username = $('<h5></h5>').text(json.author + ':');
                 let fullDate = $('<p class="addedDate"></p>').text(json.now_date);
                 let text = $('<p></p>').text(json.comment);
-                // forms.css('display', 'block');
-                // $('#homeCommentDiv').css('display', 'block');
 
                 commentCollection.last().append(username, fullDate, text, '<br>');
                 $('input[type = text]').val('');
@@ -37,9 +35,9 @@ $(function () {
     });
 
     getCommentsInput.each(function () {
+
         $(this).on('click', function () {
-            // console.log($(this).parent().attr('action'));
-            //   console.log($(this).parent().parent().attr('id'));
+
             post = $(this).parent().parent();
             post_id = post.attr('id');
             $.post(
@@ -107,6 +105,14 @@ $(function () {
         })
     });
 
+
+    $('.summernote').summernote({
+        height: 350,
+        minHeight: null,
+        maxHeight: null
+    });
+
+    // $('#summernote').summernote();
 
 });
 

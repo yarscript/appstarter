@@ -6,13 +6,14 @@ class Register extends CI_Controller
 
 	public function index()
 	{
-        $data = [];
+        $data = array();
         $data['err'] = '';
 
         if ($this->input->method() == 'post') {
 
             if ($this->validate()) {
-                $this->user->addUser($this->input->post());
+                $this->load->model('account/user_model');
+                $this->user_model->addUser($this->input->post());
                 $this->user->login($this->input->post('email'), $this->input->post('password'));
                 redirect(base_url('home'));
             }
@@ -28,9 +29,12 @@ class Register extends CI_Controller
 
 	public function validate()
 	{
+	    $this->load->model('account/user_model');
+
+
 		if ((strlen($this->input->post('password')) < 4) || strlen($this->input->post('email')) > 96) {
             $this->err = 'Error: Email must be between 4 and 96 characters!';
-		} elseif ($this->user->getUserByEmail($this->input->post('email'))) {
+		} elseif ($this->user_model->getUserByEmail($this->input->post('email'))) {
             $this->err = 'Error: E-Mail Address is already registered!';
 		} elseif (strlen(trim($this->input->post('username'))) < 1 || strlen(trim($this->input->post('username'))) > 255) {
             $this->err = 'Error: Username must be between 1 and 255 characters!';

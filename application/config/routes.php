@@ -53,6 +53,7 @@ $route['account/login'] = 'account/login';
 $route['account/register'] = 'account/register';
 $route['account/logout'] = 'account/logout';
 
+$route['content/post/(:any)'] = 'content/post/$1';
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';

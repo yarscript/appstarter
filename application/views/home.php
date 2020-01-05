@@ -1,61 +1,42 @@
 <div class="content">
 
-	<!--		<div class="homePanel">-->
-	<!--			<h1>Homepage</h1>-->
-	<!--			<div class="homeMenu">-->
-	<!--				<h4>Menu</h4>-->
-	<!--				<p>Hello, !</p>-->
-	<!--				<form action="logout" method="post">-->
-	<!--					<input type="submit" value="logout" class="submit button">-->
-	<!--				</form>-->
-	<!--				<form action="topic" method="post">-->
-	<!--					<input type="submit" value="Add new topic" class="submit button">-->
-	<!--				</form>-->
-	<!--			</div>-->
-	<!--		</div>-->
-
-
 	<div class="homePanel">
 		<h1>Homepage</h1>
 		<div class="homeMenu">
 			<h4>Menu</h4>
 			<p>Hello, <?php echo $username; ?>!</p>
 			<?php if ($logged) { ?>
-			<form action="account/logout">
-			<div><input type="submit" value="Logout" class="submit" name="logout"></div>
-			</form>
+                <div><a class="btn btn-primary btn-lg btn-block" href="<?php echo $add_posts; ?>" role="button">Add new post</a></div>
+                <br>
+                <div><a class="btn btn-primary btn-lg btn-block" href="<?php echo $logout; ?>" role="button">Logout</a></div>
 			<?php } else { ?>
-			<form action="account/login">
-			<div><input type="submit" value="Login" class="submit"></div>
-			</form>
-			<br>
-			<form action="account/register">
-			<div><input type="submit" value="Register" class="submit"></div>
-			</form>
+                <div><a class="btn btn-primary btn-lg btn-block" href="<?php echo $login; ?>" role="button">Login</a></div>
+                <br>
+                <div><a class="btn btn-primary btn-lg btn-block" href="<?php echo $register; ?>" role="button">Register</a></div>
 			<?php  } ?>
 		</div>
 	</div>
-	<div class="topicContainer">
-		<div class="topicBlock" id="">
-			<h2></h2>
-			<p></p>
-			<hr class="line">
-			<form method="post" action="comment/getComments?post_id=" id="displayCommentsButton">
-				<input type="button" value="Show comments" class="homeCommentSubmit">
-			</form>
-			<div class="homeCommentDiv"></div>
 
-			<div id="homeCommentDiv" style="display: none">
-				<hr class="line">
-				<br>
-				Add Comment
-				<form method="post" class="homeCommentForm"
-					  action="comment/addComment?post_id=&user_id=&author=">
-					<input type="text" name="comment" id="" class="commentInput">
-					<input type="button" class="homeCommentSubmit" value="Submit">
-				</form>
-			</div>
-		</div>
-	</div>
+
+    <div class="container">
+        <h1 class="mb-5">Posts</h1>
+        <br>
+        <div class="card-columns">
+            <?php foreach ($posts as $post) { ?>
+                <div class="card">
+                    <div class="card-body text-dark">
+                        <h5 class="card-title"><a href="content/post?id=<?php echo $post->id; ?>"><?php echo $post->title; ?></a></h5>
+                        <p class="card-text"><?php echo substr($post->content, 0 , 125); ?></p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted font-italic"><?php echo $post->date_added; ?></small>
+                    </div>
+                    <hr class="line">
+                </div>
+
+            <?php } ?>
+        </div>
+    </div>
+
 </div>
 

@@ -2,11 +2,15 @@
 
 	<div class="row">
 		<div class="loginPanelWrap">
-            <?php if($err) { ?>
-                <div class="alert alert-danger alert-dismissible" role="alert"><?php echo $err ?></div>
-            <?php } ?>
+
+			<?php
+			if($error) {
+				echo '<p>' . $error . '</p>';
+			}
+			?>
+
 			<div class="loginPanel">
-				<form action="account/login" method="post">
+				<form action="<?php echo $action ?>" method="post">
 					<div class="textWrap">
 						<h4>Login</h4>
 					</div>
