@@ -18,16 +18,12 @@
             </section>
         </div>
         <hr>
-       <div id="comments_container">
-           <?php foreach (array_reverse($comments) as $comment) { ?>
-               <div class="col-sm-12">
-                   <?php  echo $comment->date_added; ?> <b><a id="comment_<?php echo $comment->id?>">@<?php  echo $comment->author; ?></a></b>: <?php  echo $comment->text; ?>
-               </div>
-<!--               <hr>-->
-           <?php } ?>
-       </div>
+        <form action="<?php echo $show_comments; ?>" method="post" id="show-comments-form">
+            <button type="button" class="btn btn-primary btn-lg btn-block" id="comments_show">Show comments</button>
+        </form>
+       <div id="comments_container"></div>
         <?php if($logged) { ?>
-            <form action="<?php  echo $action; ?>" method="post" class="form-horizontal" id="form-review">
+            <form action="<?php  echo $action; ?>" method="post" class="form-horizontal" id="form-review" style="display: none">
 
                 <div class="form-group required">
                     <div class="col-sm-12">

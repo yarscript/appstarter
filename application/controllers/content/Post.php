@@ -13,24 +13,8 @@ class Post extends CI_Controller
 
         $data['logged'] = $this->user->isLogged();
 
-        if ($this->input->method() == 'post' && $this->validateComment()) {
-
-            $comment = $this->input->post();
-
-            if (!isset($comment['parent_id'])) {
-                $comment['parent_id'] = 0;
-            }
-
-            $comment['post_id'] = $this->input->get('id');
-            $comment['user_id'] = $this->user->getId();
-            $comment['author'] = $this->user->getUsername();
-
-            $this->comment_model->addComment($comment);;
-        }
-
-        $data['comments'] = $this->comment_model->getCommentsByPostId($this->input->get('id'));
-
-        $data['action'] = base_url('content/post') . '?id=' . $this->input->get('id');
+        $data['action'] = base_url('content/post/insertAjax') . '?id=' . $this->input->get('id');
+        $data['show_comments'] = base_url('content/post/showComments') . '?id=' . $this->input->get('id');
 
         if ($this->error) {
             $data['error'] = $this->error;
@@ -85,24 +69,43 @@ class Post extends CI_Controller
 
     public function insertAjax()
     {
-//        $json = array();
+
+        $this->load->model('content/post_model');
+        $this->load->model('content/comment_model');
+        $comment = array();
 
         if ($this->input->method() == 'post' && $this->validateComment()) {
-            $comment = $this->input->post() + $this->input->get();
 
-            if(!isset($comment['parent_id'])) {
-                $comment['parent_id'] = 0;
+            $comment['parent_id'] = 0;
+
+            if (isset(($this->input->get())['parent_id'])) {
+                $comment['parent_id'] = $this->input->get('parent_id');
             }
 
+            $comment['text'] = $this->input->post('text');
             $comment['post_id'] = $this->input->get('id');
             $comment['user_id'] = $this->user->getId();
             $comment['author'] = $this->user->getUsername();
 
-            $this->comment_model->addComment($comment);
+           $res = $this->comment_model->addComment($comment);
+
+            $json = $comment;
+            $json['comment_id'] = $res;
+            $json['date_added'] = date('Y-m-d H:i:s');
+            echo json_encode($json);
         }
 
-        $json = json_encode($comment);
-        echo $json;
+    }
+
+    public function showComments()
+    {
+        $this->load->model('content/post_model');
+        $this->load->model('content/comment_model');
+
+        $comments = (array)$this->comment_model->getCommentsByPostId($this->input->get('id'));
+
+        $data = $this->commentSort($comments);
+        echo json_encode($data);
     }
 
     protected function validate()
@@ -114,6 +117,21 @@ class Post extends CI_Controller
         }
 
         return !$this->error;
+    }
+
+    protected function commentSort($comments, $parent_id = 0)
+    {
+        $answers = array();
+        foreach ($comments as $comment1) {
+            if ($comment1['parent_id'] == $parent_id) {
+                if ($comment1['answers'] = $this->commentSort($comments, $comment1['id'])) {
+                    $answers[] = $comment1;
+                } else {
+                    array_push($answers, $comment1);
+                }
+            }
+        }
+        return $answers;
     }
 
     protected function validateComment()

@@ -29,7 +29,7 @@ class Comment_model extends CI_Model
     {
         $query = $this->db->query("SELECT * FROM `comment` WHERE post_id = '" . (int)$post_id . "'");
 
-        return $query->result();
+        return $query->result_array();
     }
 
     public function getTotalComments()
