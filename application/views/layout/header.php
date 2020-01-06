@@ -11,8 +11,8 @@
 <body>
 <header>
     <?php if ($back) { ?>
-    <div class="d-flex bg-white border-bottom shadow-sm navheader">
+        <div class="d-flex bg-white border-bottom shadow-sm navheader">
             <a class="btn btn btn-primary btn-back" href="<?php echo $back; ?>" role="button">Back to Homepage</a>
-    </div>
+        </div>
     <?php } ?>
 </header>

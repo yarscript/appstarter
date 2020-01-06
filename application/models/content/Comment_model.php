@@ -16,15 +16,6 @@ class Comment_model extends CI_Model
         return $query->row();
     }
 
-//    public function getComments()
-//    {
-//        $sql = 'SELECT * FROM `comment`';
-//
-//        $query = $this->db->query($sql);
-//
-//        return $query->result();
-//    }
-
     public function getCommentsByPostId($post_id)
     {
         $query = $this->db->query("SELECT * FROM `comment` WHERE post_id = '" . (int)$post_id . "'");

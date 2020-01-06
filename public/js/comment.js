@@ -10,7 +10,6 @@ $(function () {
     let commentsContainer = $('#comments_container');
 
 
-
     commentsShowButton.on('click', function () {
 
         $.post(
@@ -43,7 +42,7 @@ $(function () {
             if (parent_id === 0) {
                 addedComment = commentsContainer.prepend(newComment);
             } else {
-                let parentComment = $('#comment_'+parent_id).parent().parent();
+                let parentComment = $('#comment_' + parent_id).parent().parent();
                 parentComment.append(newComment);
             }
 

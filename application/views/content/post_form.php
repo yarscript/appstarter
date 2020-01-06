@@ -21,9 +21,6 @@
             <div class="pull-right">
                 <button id="button" class="btn btn-primary" title="Save">Save</button>
             </div>
-<!--            <div>-->
-<!--                <a class="btn btn-primary" href="--><?php //echo $back; ?><!--" role="button">back</a>-->
-<!--            </div>-->
         </form>
     </div>
 </main>

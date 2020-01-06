@@ -73,9 +73,7 @@ class Post extends CI_Controller
     {
         $this->load->model('content/post_model');
         $this->load->model('content/comment_model');
-//        setlocale(LC_ALL, 2);
 
-//        setlocale();
         $comment = array();
 
         if ($this->input->method() == 'post' && $this->validateComment()) {
