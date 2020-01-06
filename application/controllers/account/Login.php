@@ -29,8 +29,9 @@ class Login extends CI_Controller
         }
 
         $data['action'] = base_url('account/login');
+        $data['back'] = base_url();
 
-        $this->load->view('layout/header');
+        $this->load->view('layout/header', $data);
         $this->load->view('account/login', $data);
         $this->load->view('layout/footer');
     }

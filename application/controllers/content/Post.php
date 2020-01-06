@@ -15,6 +15,7 @@ class Post extends CI_Controller
 
         $data['action'] = base_url('content/post/insertAjax') . '?id=' . $this->input->get('id');
         $data['show_comments'] = base_url('content/post/showComments') . '?id=' . $this->input->get('id');
+        $data['back'] = base_url();
 
         if ($this->error) {
             $data['error'] = $this->error;
@@ -22,7 +23,7 @@ class Post extends CI_Controller
             $data['error'] = '';
         }
 
-        $this->load->view('layout/header');
+        $this->load->view('layout/header', $data);
         $this->load->view('content/post', $data);
         $this->load->view('layout/footer');
     }
@@ -61,6 +62,7 @@ class Post extends CI_Controller
         } else {
             $data['content'] = '';
         }
+        $data['back'] = base_url();
 
         $this->load->view('layout/header');
         $this->load->view('content/post_form', $data);

@@ -1,4 +1,4 @@
-<main class="py-3">
+<main class="content">
     <div class="container" id="content">
         <?php if ($error) { ?>
             <div class="alert alert-danger alert-dismissible">
@@ -10,15 +10,20 @@
             <h3 class="mb-3">New Post</h3>
             <div class="form-group">
                 <label for="title">Title</label>
-                <input class="form-control input-lg" id="title" name="title" value="<?php echo $title; ?>" placeholder="Enter your post.." required>
+                <input class="form-control input-lg" id="title" name="title" value="<?php echo $title; ?>"
+                       placeholder="Enter your post.." required>
             </div>
             <div class="form-group">
                 <label for="content">Post</label>
-                <textarea id="summernote" class="summernote" id="content" name="content" rows="10" placeholder="Enter your text.." required><?php echo $content; ?></textarea>
+                <textarea id="summernote" class="summernote" id="content" name="content" rows="10"
+                          placeholder="Enter your text.." required><?php echo $content; ?></textarea>
             </div>
             <div class="pull-right">
                 <button id="button" class="btn btn-primary" title="Save">Save</button>
             </div>
+<!--            <div>-->
+<!--                <a class="btn btn-primary" href="--><?php //echo $back; ?><!--" role="button">back</a>-->
+<!--            </div>-->
         </form>
     </div>
 </main>

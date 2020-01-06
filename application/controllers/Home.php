@@ -17,6 +17,7 @@ class Home extends CI_Controller
         $data['add_posts'] = base_url('content/post/add');
 
         $data['posts'] = $this->post_model->getPosts();
+        $data['back'] = '';
 
 		$this->load->view('layout/header', $data);
 		$this->load->view('home', $data);

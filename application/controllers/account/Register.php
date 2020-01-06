@@ -8,6 +8,7 @@ class Register extends CI_Controller
 	{
         $data = array();
         $data['err'] = '';
+        $data['back'] = base_url();
 
         if ($this->input->method() == 'post') {
 
@@ -22,7 +23,8 @@ class Register extends CI_Controller
             $data['err'] = $this->err;
         }
 
-        $this->load->view('layout/header');
+
+        $this->load->view('layout/header', $data);
         $this->load->view('account/register', $data);
         $this->load->view('layout/footer');
 	}
