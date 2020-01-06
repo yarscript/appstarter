@@ -12,7 +12,7 @@
 <header>
     <?php if ($back) { ?>
     <div class="d-flex bg-white border-bottom shadow-sm navheader">
-            <a class="btn btn btn-primary btn-back" href="<?php echo $back; ?>" role="button">back</a>
+            <a class="btn btn btn-primary btn-back" href="<?php echo $back; ?>" role="button">Back to Homepage</a>
     </div>
     <?php } ?>
 </header>

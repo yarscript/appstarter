@@ -6,26 +6,16 @@ class Login extends CI_Controller
 
     public function index()
     {
-        if ($this->input->method() == 'post' && $this->validate()) {
+
+        $data['error'] = '';
+
+        $this->setFormValidation();
+
+        if ($this->form_validation->run() === true) {
+            if ($this->user->login($this->input->post('email'), $this->input->post('password'))) {
                 redirect(base_url());
-        }
-
-        if ($this->error) {
-            $data['error'] = $this->error;
-        } else {
-            $data['error'] = '';
-        }
-
-        if ($this->input->post('email')) {
-            $data['email'] = $this->input->post('email');
-        } else {
-            $data['email'] = '';
-        }
-
-        if ($this->input->post('password')) {
-            $data['password'] = $this->input->post('password');
-        } else {
-            $data['password'] = '';
+            }
+            $data['error'] = 'No match for Email and/or Password!';
         }
 
         $data['action'] = base_url('account/login');
@@ -36,18 +26,27 @@ class Login extends CI_Controller
         $this->load->view('layout/footer');
     }
 
-    public function validate()
+    protected function setFormValidation()
     {
-        $this->error = '';
-        if (strlen($this->input->post('password')) < 4 || strlen($this->input->post('password')) > 40) {
-            $this->error = 'Error: Password must be between 4 and 20 characters!';
-        }
-        elseif ((strlen($this->input->post('email')) > 96) || !filter_var($this->input->post('email'), FILTER_VALIDATE_EMAIL)) {
-            $this->error = 'Error: E-Mail Address does not appear to be valid!';
-        }
-        elseif (!$this->user->login($this->input->post('email'), $this->input->post('password'))) {
-            $this->error = 'Error: No match for Email and/or Password.';
-        }
-        return !$this->error;
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('email', 'Email',
+            'trim|required|valid_email|max_length[96]',
+            array(
+                'required' => 'You have not provided %s.',
+                'valid_email' => '%s does not appear to be valid.',
+                'max_length' => '%s must be less than 96 characters.'
+            )
+        );
+        $this->form_validation->set_rules('password', 'Password',
+            'trim|required|min_length[4]|max_length[64]',
+            array(
+                'required' => 'You have not provided %s.',
+                'min_length' => '%s must be more than 4 characters.',
+                'max_length' => '%s must be less than 64 characters.'
+            )
+        );
     }
+
 }

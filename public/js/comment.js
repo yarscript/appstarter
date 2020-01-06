@@ -1,6 +1,5 @@
 $(function () {
 
-
     let comment_form = $('#form-review');
     const action = comment_form.attr('action');
     let input = $('#input-review');
@@ -42,7 +41,7 @@ $(function () {
                 '</div>';
 
             if (parent_id === 0) {
-                addedComment = commentsContainer.append(newComment);
+                addedComment = commentsContainer.prepend(newComment);
             } else {
                 let parentComment = $('#comment_'+parent_id).parent().parent();
                 parentComment.append(newComment);
@@ -84,7 +83,7 @@ $(function () {
             let json = JSON.parse(data);
             let addedComment;
             let newComment =
-                '<div class="col-sm-12">' + json.date_added +
+                '<div class="col-sm-12 com-div">' + json.date_added +
                 ' <b><a id = "comment_' + json.comment_id +
                 '">@' + json.author +
                 '</a></b>: ' + json.text +

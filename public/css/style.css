@@ -284,3 +284,18 @@ p {
     background-color: #007bff;
     border-color: #007bff;
 }
+
+.border {
+    border-left: 3px;
+
+    /*display: inline-block;*/
+    /*border-color: #990000;*/
+    /*width: 70px;*/
+    /*height: 70px;*/
+    /*margin: 6px;*/
+}
+
+/*.com-div {*/
+/*    border-left: 10px;*/
+/*    border-bottom-color: #5d95e6;*/
+/*}*/

@@ -3,11 +3,11 @@
 	<div class="row">
 		<div class="loginPanelWrap">
 
-			<?php
-			if($error) {
-				echo '<p>' . $error . '</p>';
-			}
-			?>
+			<?php if($error) { ?>
+                <div class="alert alert-danger" role="alert" id="warning">
+                    <?php echo $error; ?>
+                </div>
+		<?php } ?>
 
 			<div class="loginPanel">
 				<form action="<?php echo $action ?>" method="post">

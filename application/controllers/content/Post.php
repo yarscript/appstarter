@@ -64,16 +64,18 @@ class Post extends CI_Controller
         }
         $data['back'] = base_url();
 
-        $this->load->view('layout/header');
+        $this->load->view('layout/header', $data);
         $this->load->view('content/post_form', $data);
         $this->load->view('layout/footer');
     }
 
     public function insertAjax()
     {
-
         $this->load->model('content/post_model');
         $this->load->model('content/comment_model');
+//        setlocale(LC_ALL, 2);
+
+//        setlocale();
         $comment = array();
 
         if ($this->input->method() == 'post' && $this->validateComment()) {
@@ -89,7 +91,7 @@ class Post extends CI_Controller
             $comment['user_id'] = $this->user->getId();
             $comment['author'] = $this->user->getUsername();
 
-           $res = $this->comment_model->addComment($comment);
+            $res = $this->comment_model->addComment($comment);
 
             $json = $comment;
             $json['comment_id'] = $res;
@@ -110,17 +112,6 @@ class Post extends CI_Controller
         echo json_encode($data);
     }
 
-    protected function validate()
-    {
-        if (strlen($this->input->post('title')) < 1 || strlen(trim($this->input->post('title'))) > 255) {
-            $this->error = 'Error: Title must be between 1 and 255 characters!';
-        } elseif (strlen($this->input->post('content')) < 3) {
-            $this->error = 'Error: Topic must be more than 3 characters!';
-        }
-
-        return !$this->error;
-    }
-
     protected function commentSort($comments, $parent_id = 0)
     {
         $answers = array();
@@ -136,6 +127,17 @@ class Post extends CI_Controller
         return $answers;
     }
 
+    protected function validate()
+    {
+        if (strlen($this->input->post('title')) < 1 || strlen(trim($this->input->post('title'))) > 255) {
+            $this->error = 'Error: Title must be between 1 and 255 characters!';
+        } elseif (strlen($this->input->post('content')) < 3) {
+            $this->error = 'Error: Topic must be more than 3 characters!';
+        }
+
+        return !$this->error;
+    }
+
     protected function validateComment()
     {
         $this->error = '';
@@ -147,5 +149,18 @@ class Post extends CI_Controller
         return !$this->error;
     }
 
+    protected function setCommentValidation()
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->form_validate->set_rules('text', 'Comment',
+            'required|min_length[3]',
+            array(
+                'required' => 'You have not provided %s',
+                'min_length' => '%s must be more 3 characters!'
+            )
+        );
+    }
 
 }

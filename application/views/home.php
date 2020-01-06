@@ -36,6 +36,8 @@
 
             <?php } ?>
         </div>
+        <?php echo $pages; ?>
+
     </div>
 
 </div>

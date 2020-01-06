@@ -4,48 +4,70 @@ class Register extends CI_Controller
 {
     protected $err;
 
-	public function index()
-	{
+    public function index()
+    {
         $data = array();
         $data['err'] = '';
         $data['back'] = base_url();
 
-        if ($this->input->method() == 'post') {
+        $this->setFormValidation();
 
-            if ($this->validate()) {
-                $this->load->model('account/user_model');
+        if ($this->form_validation->run() === true) {
+
+            $this->load->model('account/user_model');
+
+            if (!$this->user_model->getUserByEmail($this->input->post('email'))) {
                 $this->user_model->addUser($this->input->post());
                 $this->user->login($this->input->post('email'), $this->input->post('password'));
-                redirect(base_url('home'));
+                redirect(base_url());
             }
 
-            $data = $this->input->post();
-            $data['err'] = $this->err;
-        }
+            $data['err'] = 'This Email already registered!';
 
+        }
 
         $this->load->view('layout/header', $data);
         $this->load->view('account/register', $data);
         $this->load->view('layout/footer');
-	}
+    }
 
-	public function validate()
-	{
-	    $this->load->model('account/user_model');
+    protected function setFormValidation()
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
 
 
-		if ((strlen($this->input->post('password')) < 4) || strlen($this->input->post('email')) > 96) {
-            $this->err = 'Error: Email must be between 4 and 96 characters!';
-		} elseif ($this->user_model->getUserByEmail($this->input->post('email'))) {
-            $this->err = 'Error: E-Mail Address is already registered!';
-		} elseif (strlen(trim($this->input->post('username'))) < 1 || strlen(trim($this->input->post('username'))) > 255) {
-            $this->err = 'Error: Username must be between 1 and 255 characters!';
-        } elseif ((strlen($this->input->post('password')) < 4) || strlen($this->input->post('password')) > 40) {
-            $this->err = 'Error: Password must be between 4 and 20 characters!';
-		} elseif ($this->input->post('password') !== $this->input->post('confirm')) {
-            $this->err = 'Error: Your password do not matches!';
-		}
+        $this->form_validation->set_rules('email', 'Email',
+            'trim|required|valid_email|max_length[96]',
+            array(
+                'required' => 'You have not provided %s.',
+                'valid_email' => '%s does not appear to be valid.',
+                'max_length' => '%s must be less than 96 characters.'
+            )
+        );
 
-		return !$this->err;
-	}
+        $this->form_validation->set_rules('username', 'Username',
+            'trim|required|min_length[3]|max_length[255]',
+            array(
+                'required' => 'You have not provided %s.',
+                'min_length' => '%s must be more than 3 characters.',
+                'max_length' => '%s must be less than 255 characters.')
+        );
+
+        $this->form_validation->set_rules('password', 'Password',
+            'trim|required|min_length[4]|max_length[40]',
+            array(
+                'required' => 'You have not provided %s',
+                'min_length' => '%s must be more than 4 characters',
+                'max_length' => '%s must be less than 40 characters'
+            ));
+
+        $this->form_validation->set_rules('confirm', 'Password Confirmation',
+            'trim|required|matches[password]',
+            array(
+                'required' => 'You have not provided %s',
+                'matches' => 'Your %s not matches!'
+            ));
+    }
+
 }
