@@ -7,23 +7,31 @@ class Login extends CI_Controller
     public function index()
     {
 
+        $data['action'] = base_url('account/login/insertAjax');
+        $data['back'] = base_url();
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('account/login', $data);
+        $this->load->view('layout/footer');
+    }
+
+    public function insertAjax()
+    {
         $data['error'] = '';
 
         $this->setFormValidation();
 
         if ($this->form_validation->run() === true) {
             if ($this->user->login($this->input->post('email'), $this->input->post('password'))) {
-                redirect(base_url());
+                $data['location'] = base_url();
+            } else {
+                $data['error'] = 'No match for Email and/or Password!';
             }
-            $data['error'] = 'No match for Email and/or Password!';
+        } else {
+            $data['error'] = validation_errors();
         }
 
-        $data['action'] = base_url('account/login');
-        $data['back'] = base_url();
-
-        $this->load->view('layout/header', $data);
-        $this->load->view('account/login', $data);
-        $this->load->view('layout/footer');
+        echo json_encode($data);
     }
 
     protected function setFormValidation()

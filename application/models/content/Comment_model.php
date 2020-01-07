@@ -11,13 +11,13 @@ class Comment_model extends CI_Model
 
     public function getComment($id)
     {
-        $query = $this->db->where('id', (int)$id)->get('comment');
+        $query = $this->db->where('id', $id)->get('comment');
         return $query->row();
     }
 
     public function getCommentsByPostId($post_id)
     {
-        $query = $this->db->where('post_id', (int)$post_id)->get('comment');
+        $query = $this->db->where('post_id', $post_id)->get('comment');
 
         return $query->result_array();
     }

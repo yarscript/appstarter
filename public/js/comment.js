@@ -80,19 +80,29 @@ $(function () {
 
         function onAjaxSuccess(data) {
             let json = JSON.parse(data);
-            let addedComment;
-            let newComment =
-                '<div class="col-sm-12 com-div">' + json.date_added +
-                ' <b><a id = "comment_' + json.comment_id +
-                '">@' + json.author +
-                '</a></b>: ' + json.text +
-                '</div>';
+            if (json.error) {
+                $('#content').prepend(
+                    '<div class="alert alert-danger alert-dismissible">'
+                    + json.error +
+                    '<button id="error-alert-close" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '</div>')
+            } else {
+                $('#error-alert-close').click();
+                let addedComment;
+                let newComment =
+                    '<div class="col-sm-12 com-div">' + json.date_added +
+                    ' <b><a id = "comment_' + json.comment_id +
+                    '">@' + json.author +
+                    '</a></b>: ' + json.text +
+                    '</div>';
 
 
-            addedComment = appendComment(json.parent_id, newComment);
+                addedComment = appendComment(json.parent_id, newComment);
 
-            addedComment.on('click', reply);
-            input.val('');
+                addedComment.on('click', reply);
+                input.val('');
+            }
+
         }
     });
 

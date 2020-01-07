@@ -9,6 +9,8 @@ class Post extends CI_Controller
         $this->load->model('content/post_model');
         $this->load->model('content/comment_model');
 
+        $this->setCommentValidation();
+
         $data = (array)$this->post_model->getPost($this->input->get('id'));
 
         $data['logged'] = $this->user->isLogged();
@@ -34,19 +36,21 @@ class Post extends CI_Controller
             redirect(base_url('account/login'));
         }
 
+        $data['error'] = '';
+
+
         $this->load->model('content/post_model');
 
-        if ($this->input->method() == 'post' && $this->validate()) {
-            $post = $this->input->post();
-            $post['user_id'] = $this->user->getId();
-            $this->post_model->addPost($post);
-            redirect(base_url('home'));
-        }
-
-        if ($this->error) {
-            $data['error'] = $this->error;
-        } else {
-            $data['error'] = '';
+        $this->setPostValidation();
+        if ($this->form_validation->run()) {
+            if ($this->input->method() == 'post') {
+                $post = $this->input->post();
+                $post['user_id'] = $this->user->getId();
+                $this->post_model->addPost($post);
+                redirect(base_url('home'));
+            }
+        } else  {
+            $data['error'] = validation_errors();
         }
 
         $data['action'] = base_url('content/post/add');
@@ -75,26 +79,34 @@ class Post extends CI_Controller
         $this->load->model('content/comment_model');
 
         $comment = array();
+        $this->setCommentValidation();
 
-        if ($this->input->method() == 'post' && $this->validateComment()) {
 
-            $comment['parent_id'] = 0;
+        if ($this->form_validation->run() === true) {
 
-            if (isset(($this->input->get())['parent_id'])) {
-                $comment['parent_id'] = $this->input->get('parent_id');
+            if ($this->input->method() == 'post') {
+
+                $comment['parent_id'] = 0;
+
+                if (isset(($this->input->get())['parent_id'])) {
+                    $comment['parent_id'] = $this->input->get('parent_id');
+                }
+
+                $comment['text'] = $this->input->post('text');
+                $comment['post_id'] = $this->input->get('id');
+                $comment['user_id'] = $this->user->getId();
+                $comment['author'] = $this->user->getUsername();
+
+                $res = $this->comment_model->addComment($comment);
+
+                $json = $comment;
+                $json['comment_id'] = $res;
+                $json['date_added'] = date('Y-m-d H:i:s');
+                echo json_encode($json);
             }
-
-            $comment['text'] = $this->input->post('text');
-            $comment['post_id'] = $this->input->get('id');
-            $comment['user_id'] = $this->user->getId();
-            $comment['author'] = $this->user->getUsername();
-
-            $res = $this->comment_model->addComment($comment);
-
-            $json = $comment;
-            $json['comment_id'] = $res;
-            $json['date_added'] = date('Y-m-d H:i:s');
-            echo json_encode($json);
+        } else {
+            $comment['error'] = validation_errors();
+            echo json_encode($comment);
         }
 
     }
@@ -152,13 +164,33 @@ class Post extends CI_Controller
         $this->load->helper('form');
         $this->load->library('form_validation');
 
-        $this->form_validate->set_rules('text', 'Comment',
+        $this->form_validation->set_rules('text', 'Comment',
+            'required',
+            array(
+                'required' => 'You have not provided %s',
+            )
+        );
+    }
+
+    protected function setPostValidation()
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('title', 'Title',
             'required|min_length[3]',
             array(
                 'required' => 'You have not provided %s',
                 'min_length' => '%s must be more 3 characters!'
             )
         );
+
+//        $this->form_validation->set_rules('content', 'Text',
+//            'required|min_length[10]',
+//            array(
+//                'required' => 'You have not provided %s',
+//                'min_length' => '%s must be more 3 characters!'
+//            ));
     }
 
 }

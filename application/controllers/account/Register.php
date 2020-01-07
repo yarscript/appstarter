@@ -9,8 +9,20 @@ class Register extends CI_Controller
         $data = array();
         $data['err'] = '';
         $data['back'] = base_url();
+        $data['action'] = base_url('account/register/insertAjax');
 
+
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('account/register', $data);
+        $this->load->view('layout/footer');
+    }
+
+    public function insertAjax()
+    {
         $this->setFormValidation();
+
+        $data['err'] = '';
 
         if ($this->form_validation->run() === true) {
 
@@ -19,16 +31,16 @@ class Register extends CI_Controller
             if (!$this->user_model->getUserByEmail($this->input->post('email'))) {
                 $this->user_model->addUser($this->input->post());
                 $this->user->login($this->input->post('email'), $this->input->post('password'));
-                redirect(base_url());
+//                redirect(base_url());
+                $data['location'] = base_url();
+            } else {
+                $data['err'] = 'This Email already registered!';
             }
-
-            $data['err'] = 'This Email already registered!';
-
+        } else {
+            $data['err'] = validation_errors();
         }
 
-        $this->load->view('layout/header', $data);
-        $this->load->view('account/register', $data);
-        $this->load->view('layout/footer');
+        echo json_encode($data);
     }
 
     protected function setFormValidation()

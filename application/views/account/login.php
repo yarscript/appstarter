@@ -1,16 +1,10 @@
 <div class="content">
 
-    <div class="row">
-        <div class="loginPanelWrap">
-
-            <?php if ($error) { ?>
-                <div class="alert alert-danger" role="alert" id="warning">
-                    <?php echo $error; ?>
-                </div>
-            <?php } ?>
+    <div class="row" id="row">
+        <div class="loginPanelWrap" id="login-panel-wrap">
 
             <div class="loginPanel">
-                <form action="<?php echo $action ?>" method="post">
+                <form action="<?php echo $action ?>" method="post" id="login-form">
                     <div class="textWrap">
                         <h4>Login</h4>
                     </div>
@@ -18,7 +12,7 @@
                         <label class="user_login">
                             Email
                             <br>
-                            <input type="email" class="input" placeholder="Email" id="Email" name="email">
+                            <input type="email" class="input" placeholder="Email" id="login-email-input" name="email">
                         </label>
                     </p>
                     <hr class="line">
@@ -26,11 +20,11 @@
                         <label class="user_pass">
                             Password
                             <br>
-                            <input type="text" class="input" placeholder="Password" id="password" name="password">
+                            <input type="text" class="input" placeholder="Password" id="login-password-input" name="password">
                         </label>
                     </p>
                     <div>
-                        <button type="submit" class="submit button">
+                        <button type="button" class="submit button" id="login-button">
                             Login
                         </button>
                     </div>
