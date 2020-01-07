@@ -9,6 +9,8 @@ class Login extends CI_Controller
 
         $data['action'] = base_url('account/login/insertAjax');
         $data['back'] = base_url();
+        $data['header_register'] = base_url('account/register');
+        $data['header_login'] = '';
 
         $this->load->view('layout/header', $data);
         $this->load->view('account/login', $data);

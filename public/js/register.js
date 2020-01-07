@@ -10,10 +10,10 @@ $(function () {
         $.post(
             form.attr('action'),
             {
-                'email' : email.val(),
-                'username' : username.val(),
-                'password' : password.val(),
-                'confirm' : confirm.val()
+                'email': email.val(),
+                'username': username.val(),
+                'password': password.val(),
+                'confirm': confirm.val()
             },
             onAjaxSuccess
         );

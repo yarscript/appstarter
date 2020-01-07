@@ -10,7 +10,8 @@ class Register extends CI_Controller
         $data['err'] = '';
         $data['back'] = base_url();
         $data['action'] = base_url('account/register/insertAjax');
-
+        $data['header_login'] = base_url('account/login');
+        $data['header_register'] = '';
 
 
         $this->load->view('layout/header', $data);
@@ -31,7 +32,6 @@ class Register extends CI_Controller
             if (!$this->user_model->getUserByEmail($this->input->post('email'))) {
                 $this->user_model->addUser($this->input->post());
                 $this->user->login($this->input->post('email'), $this->input->post('password'));
-//                redirect(base_url());
                 $data['location'] = base_url();
             } else {
                 $data['err'] = 'This Email already registered!';

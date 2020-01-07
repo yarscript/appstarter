@@ -19,12 +19,12 @@
                 </p>
                 <p>Entry your password
                     <label class="user_login">
-                        <input type="text" name="password" class="registerInput" id="register-password-input">
+                        <input type="password" name="password" class="registerInput" id="register-password-input">
                     </label>
                 </p>
                 <p>Confirm your password
                     <label class="user_login">
-                        <input type="text" name="confirm" class="registerInput" id="register-confirm-input">
+                        <input type="password" name="confirm" class="registerInput" id="register-confirm-input">
                     </label>
                 </p>
                 <hr class="line">

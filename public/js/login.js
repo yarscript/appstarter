@@ -8,8 +8,8 @@ $(function () {
         $.post(
             form.attr('action'),
             {
-                'email' : email.val(),
-                'password' : password.val(),
+                'email': email.val(),
+                'password': password.val(),
             },
             onAjaxSuccess
         );
@@ -26,7 +26,7 @@ $(function () {
                     '<button type="button" class="close" data-dismiss="alert" id="register-close-button">&times;</button>' +
                     '</div>\n');
             } else {
-               json.location ? location.replace(json.location) : 0;
+                json.location ? location.replace(json.location) : 0;
             }
         }
     });

@@ -20,7 +20,8 @@
                         <label class="user_pass">
                             Password
                             <br>
-                            <input type="text" class="input" placeholder="Password" id="login-password-input" name="password">
+                            <input type="password" class="input" placeholder="Password" id="login-password-input"
+                                   name="password">
                         </label>
                     </p>
                     <div>

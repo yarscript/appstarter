@@ -19,6 +19,8 @@ class Home extends CI_Controller
 
         $data['posts'] = $this->post_model->getPosts();
         $data['back'] = '';
+        $data['header_login'] = '';
+        $data['header_register'] = '';
 
         /** Pagination config */
         $config['base_url'] = base_url();
@@ -38,7 +40,7 @@ class Home extends CI_Controller
 
         $data['posts'] = $this->post_model->getLimitedPosts($options);
 
-         $this->load->view('layout/header', $data);
+        $this->load->view('layout/header', $data);
         $this->load->view('home', $data);
         $this->load->view('layout/footer', $data);
     }

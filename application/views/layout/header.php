@@ -10,6 +10,17 @@
 </head>
 <body>
 <header>
+    <?php if ($header_login) { ?>
+        <div class="d-flex bg-white border-bottom shadow-sm navheader">
+            <a class="btn btn btn-primary btn-back" href="<?php echo $header_login; ?>" role="button">Login</a>
+        </div>
+    <?php } ?>
+
+    <?php if ($header_register) { ?>
+        <div class="d-flex bg-white border-bottom shadow-sm navheader">
+            <a class="btn btn btn-primary btn-back" href="<?php echo $header_register; ?>" role="button">Register</a>
+        </div>
+    <?php } ?>
     <?php if ($back) { ?>
         <div class="d-flex bg-white border-bottom shadow-sm navheader">
             <a class="btn btn btn-primary btn-back" href="<?php echo $back; ?>" role="button">Back to Homepage</a>

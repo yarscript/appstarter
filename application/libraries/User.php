@@ -24,7 +24,7 @@ class User
     {
         $this->CI->load->model('account/user_model');
 
-        if($row = $this->CI->user_model->getUserByEmail($email)){
+        if ($row = $this->CI->user_model->getUserByEmail($email)) {
             if (password_verify($password, $row->password)) {
                 if (password_needs_rehash($row->password, PASSWORD_DEFAULT)) {
                     $hash = password_hash($password, PASSWORD_DEFAULT);
