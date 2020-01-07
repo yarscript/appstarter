@@ -4,31 +4,27 @@ class Comment_model extends CI_Model
 {
     public function addComment($data)
     {
-        $this->db->query("INSERT INTO `comment` SET `parent_id` = '" . (int)$data['parent_id'] . "', `post_id` = '" . (int)$data['post_id'] . "', `user_id` = '" . (int) $data['user_id'] . "', `author` = " . $this->db->escape($data['author']) . ", `text` = " . $this->db->escape(strip_tags($data['text'])) . ", `date_added` = NOW()");
-
+        $data['date_added'] = date('Y-m-d H:i:s');
+        $this->db->insert('comment', $data);
         return $this->db->insert_id();
     }
 
     public function getComment($id)
     {
-        $query = $this->db->query("SELECT DISTINCT * FROM `comment` WHERE id = '" . (int)$id . "'");
-
+        $query = $this->db->where('id', (int)$id)->get('comment');
         return $query->row();
     }
 
     public function getCommentsByPostId($post_id)
     {
-        $query = $this->db->query("SELECT * FROM `comment` WHERE post_id = '" . (int)$post_id . "'");
+        $query = $this->db->where('post_id', (int)$post_id)->get('comment');
 
         return $query->result_array();
     }
 
     public function getTotalComments()
     {
-        $sql = "SELECT COUNT(*) AS total FROM `comment`";
-
-        $query = $this->db->query($sql);
-
+        $query = $this->select('COUNT(*)')->get('comment');
         return $query->row('total');
     }
 }

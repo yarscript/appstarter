@@ -38,7 +38,7 @@ class Home extends CI_Controller
 
         $data['posts'] = $this->post_model->getLimitedPosts($options);
 
-        $this->load->view('layout/header', $data);
+         $this->load->view('layout/header', $data);
         $this->load->view('home', $data);
         $this->load->view('layout/footer', $data);
     }
