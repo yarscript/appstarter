@@ -19,7 +19,6 @@ $(function () {
         );
 
         function onAjaxSuccess(data) {
-            // console.log(data);
             let json = JSON.parse(data);
             console.log(json);
             $('#register-close-button').click();

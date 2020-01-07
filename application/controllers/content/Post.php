@@ -184,13 +184,6 @@ class Post extends CI_Controller
                 'min_length' => '%s must be more 3 characters!'
             )
         );
-
-//        $this->form_validation->set_rules('content', 'Text',
-//            'required|min_length[10]',
-//            array(
-//                'required' => 'You have not provided %s',
-//                'min_length' => '%s must be more 3 characters!'
-//            ));
     }
 
 }
